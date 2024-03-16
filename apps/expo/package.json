@@ -39,7 +39,6 @@
     "@babel/preset-env": "^7.23.9",
     "@babel/runtime": "^7.23.9",
     "@expo/config-plugins": "~7.8.4",
-    "@snuber/api": "workspace:^0.0.1",
     "@snuber/eslint-config": "workspace:^0.0.1",
     "@snuber/prettier-config": "workspace:^0.0.1",
     "@snuber/tailwind-config": "workspace:^0.0.1",

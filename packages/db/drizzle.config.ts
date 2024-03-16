@@ -7,6 +7,7 @@ if (!DATABASE_URL || !DATABASE_AUTH_TOKEN) {
 }
 
 export default {
+  out: "./drizzle",
   schema: "./src/schema",
   driver: "turso",
   dbCredentials: {

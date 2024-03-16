@@ -25,9 +25,7 @@ const io = new Server<
   },
 });
 
-const pubClient = new Redis(
-  "rediss://default:9cac102a5e704889bc553077aba3c281@native-chow-39725.upstash.io:39725",
-);
+const pubClient = new Redis(process.env.REDIS_URL!);
 
 const subClient = pubClient.duplicate();
 

@@ -1,38 +1,35 @@
-import { createApp } from "./app/create-app";
-import { SnuberEnv } from "./env";
-import { init } from "./pkg/middleware/init";
-import { registerGithubCallback, registerGithubLogin } from "./routes/github";
-import { registerLiveness } from "./routes/liveness";
-import { registerUser } from "./routes/user";
+import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import type { z } from "zod";
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-const app = createApp();
+import type { SnuberEnv } from "./env";
+import { createContext } from "./trpc/context";
+import { router } from "./trpc/routers";
 
-app.use("*", init());
+export type Env = z.infer<typeof SnuberEnv>;
 
-registerLiveness(app);
-registerUser(app);
-registerGithubLogin(app);
-registerGithubCallback(app);
-
-const handler: ExportedHandler<SnuberEnv> = {
-  fetch: (req: Request, env: SnuberEnv, ctx: ExecutionContext) => {
-    const parsed = SnuberEnv.safeParse(env);
-
-    if (!parsed.success) {
-      return Response.json(
-        {
-          code: "INVALID_ENV",
-          message: "Invalid environment variables",
-          errors: parsed.error,
+export default {
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext,
+  ): Promise<Response> {
+    if (request.method === "OPTIONS") {
+      const response = new Response(null, {
+        status: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
         },
-        { status: 500 },
-      );
+      });
+      return response;
     }
-
-    return app.fetch(req, env, ctx);
+    return fetchRequestHandler({
+      endpoint: "/trpc/*",
+      req: request,
+      router,
+      createContext: (options: FetchCreateContextFnOptions) =>
+        createContext({ ...options, env, ctx }),
+    });
   },
 };
-
-export default handler;
-
-export type AppType = typeof app;

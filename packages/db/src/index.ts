@@ -1,5 +1,8 @@
+import path from "path";
 import { createClient } from "@libsql/client";
+import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/libsql";
+import { migrate as drizzleMigrate } from "drizzle-orm/libsql/migrator";
 
 import * as schema from "./schema";
 
@@ -66,3 +69,25 @@ export const createDrizzle = (options: CreateDrizzleOptions) => {
 export * as schema from "./schema";
 
 export * from "drizzle-orm";
+
+export type Database = ReturnType<typeof createDrizzle>;
+
+export function migrate(db: Database) {
+  const root = path.resolve(__dirname, "..");
+  return drizzleMigrate(db, { migrationsFolder: `${root}/drizzle` });
+}
+
+export async function clearDb(db: Database) {
+  const query = sql<string>`SELECT table_name
+      FROM information_schema.tables
+      WHERE table_schema = 'public'
+        AND table_type = 'BASE TABLE';
+    `;
+
+  const tables = await db.execute(query);
+
+  for (const table of tables) {
+    const query = sql.raw(`TRUNCATE TABLE ${table.table_name} CASCADE;`);
+    await db.execute(query);
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1710584383920,
+      "tag": "0000_fearless_wildside",
+      "breakpoints": true
+    }
+  ]
+}

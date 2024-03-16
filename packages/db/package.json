@@ -10,7 +10,8 @@
     "clean": "git clean -xdf .next .turbo node_modules",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "typecheck": "tsc --noEmit",
-    "with-env": "dotenv -e '../../.env'"
+    "with-env": "dotenv -e '../../.env'",
+    "generate": "pnpm with-env drizzle-kit generate:sqlite"
   },
   "exports": {
     "./package.json": "./package.json",
@@ -20,6 +21,9 @@
       "default": "./dist/index.mjs"
     }
   },
+  "files": [
+    "./drizzle"
+  ],
   "devDependencies": {
     "@snuber/eslint-config": "*",
     "@snuber/prettier-config": "*",
@@ -43,4 +47,3 @@
     "drizzle-orm": "^0.29.4"
   }
 }
-
