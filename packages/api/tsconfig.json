@@ -1,0 +1,14 @@
+{
+  "extends": "@snuber/typescript-config/base.json",
+  "compilerOptions": {
+    "lib": ["es2022"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "forceConsistentCasingInFileNames": true
+  }
+}

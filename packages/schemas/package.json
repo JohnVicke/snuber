@@ -1,0 +1,40 @@
+{
+  "name": "@snuber/schemas",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@snuber/db": "workspace:*",
+    "drizzle-typebox": "0.1.1",
+    "drizzle-zod": "0.5.1",
+    "zod": "3.22.4"
+  },
+  "devDependencies": {
+    "@snuber/eslint-config": "workspace:*",
+    "@snuber/prettier-config": "workspace:*",
+    "@snuber/tailwind-config": "workspace:*",
+    "@snuber/typescript-config": "workspace:*",
+    "tsup": "^8.0.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@snuber/eslint-config/base"
+    ]
+  },
+  "prettier": "@snuber/prettier-config"
+}

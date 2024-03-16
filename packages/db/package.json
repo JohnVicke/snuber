@@ -1,0 +1,46 @@
+{
+  "name": "@snuber/db",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "push": "pnpm with-env drizzle-kit push:sqlite",
+    "studio": "pnpm with-env drizzle-kit studio",
+    "build": "tsup",
+    "dev": "tsup --watch & pnpm run studio",
+    "clean": "git clean -xdf .next .turbo node_modules",
+    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+    "typecheck": "tsc --noEmit",
+    "with-env": "dotenv -e '../../.env'"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "devDependencies": {
+    "@snuber/eslint-config": "*",
+    "@snuber/prettier-config": "*",
+    "@snuber/typescript-config": "*",
+    "dotenv-cli": "^7.3.0",
+    "drizzle-kit": "^0.20.14",
+    "tsup": "^8.0.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.4.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@snuber/eslint-config/base"
+    ]
+  },
+  "prettier": "@snuber/prettier-config",
+  "dependencies": {
+    "@libsql/client": "^0.5.1",
+    "drizzle-orm": "^0.29.4"
+  }
+}
+

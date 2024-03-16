@@ -1,0 +1,38 @@
+{
+  "name": "@snuber/eslint-config",
+  "version": "0.0.1",
+  "private": true,
+  "files": [
+    "base.js",
+    "next.js",
+    "react.js",
+    "remix.js"
+  ],
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@snuber/typescript-config": "*",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "@vercel/style-guide": "^5.1.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-turbo": "^1.11.3",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-only-warn": "^1.1.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "typescript": "^5.4.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "./base.js"
+    ]
+  },
+  "prettier": "@snuber/prettier-config"
+}

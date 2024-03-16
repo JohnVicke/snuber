@@ -1,0 +1,12 @@
+{
+  "extends": "@snuber/typescript-config/react-library.json",
+  "compilerOptions": {
+    "paths": {
+      "~/*": ["./*"]
+    },
+    "incremental": false,
+    "outDir": "dist"
+  },
+  "include": ["src", "turbo", "*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

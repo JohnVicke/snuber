@@ -1,0 +1,3 @@
+{
+  "extends": "@snuber/typescript-config/base.json"
+}
