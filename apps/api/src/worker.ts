@@ -1,35 +1,43 @@
-import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import type { z } from "zod";
-import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-import type { SnuberEnv } from "./env";
-import { createContext } from "./trpc/context";
-import { router } from "./trpc/routers";
+import { createApp } from "./app";
+import { SnuberEnv } from "./env";
+import { initMiddleware } from "./pkg/middleware";
+import { honoRouter } from "./pkg/routes";
+import { registerTRPCHandler } from "./trpc/register-trpc-handler";
 
 export type Env = z.infer<typeof SnuberEnv>;
 
-export default {
-  async fetch(
-    request: Request,
-    env: Env,
-    ctx: ExecutionContext,
-  ): Promise<Response> {
-    if (request.method === "OPTIONS") {
-      const response = new Response(null, {
-        status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
+const app = createApp().use("*", initMiddleware()).route("/api/v1", honoRouter);
+
+app.get("/api/v1/routes", (c) => {
+  return c.json(
+    app.routes.map((route) => ({
+      method: route.method,
+      path: route.path,
+    })),
+  );
+});
+
+registerTRPCHandler(app);
+
+const handler = {
+  fetch: async (req: Request, env: Env, ctx: ExecutionContext) => {
+    const parsedEnv = SnuberEnv.safeParse(env);
+
+    if (!parsedEnv.success) {
+      return Response.json(
+        {
+          code: "INVALID_ENV",
+          message: "Invalid environment",
+          errors: parsedEnv.error.errors,
         },
-      });
-      return response;
+        { status: 500 },
+      );
     }
-    return fetchRequestHandler({
-      endpoint: "/trpc/*",
-      req: request,
-      router,
-      createContext: (options: FetchCreateContextFnOptions) =>
-        createContext({ ...options, env, ctx }),
-    });
+
+    return app.fetch(req, env, ctx);
   },
-};
+} satisfies ExportedHandler<Env>;
+
+export default handler;

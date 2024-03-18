@@ -5,18 +5,19 @@ export const users = sqliteTable("user", {
   id: text("id").notNull().primaryKey(),
   email: text("email").unique().notNull(),
   imageUrl: text("image_url"),
-  githubProfileId: integer("github_profile_id").references(
-    () => githubProfiles.id,
+  googleProfileId: text("google_profile_id").references(
+    () => googleProfiles.id,
   ),
   emailVerified: integer("email_verified", { mode: "boolean" })
     .notNull()
     .default(false),
 });
 
-export const githubProfiles = sqliteTable("github_profile", {
-  id: integer("id").notNull().primaryKey(),
-  avatarUrl: text("avatar_url"),
-  username: text("username").notNull(),
+export const googleProfiles = sqliteTable("google_profile", {
+  id: text("id").notNull().primaryKey(),
+  picture: text("picture"),
+  givenName: text("given_name").notNull(),
+  familyName: text("family_name").notNull(),
 });
 
 export const sessions = sqliteTable("session", {
@@ -28,15 +29,15 @@ export const sessions = sqliteTable("session", {
 });
 
 export const userRelations = relations(users, ({ one }) => ({
-  githubProfile: one(githubProfiles, {
-    references: [githubProfiles.id],
-    fields: [users.githubProfileId],
+  googleProfile: one(googleProfiles, {
+    references: [googleProfiles.id],
+    fields: [users.googleProfileId],
   }),
 }));
 
-export const githubProfileRelations = relations(githubProfiles, ({ one }) => ({
+export const googleProfileRelations = relations(googleProfiles, ({ one }) => ({
   user: one(users, {
-    fields: [githubProfiles.id],
-    references: [users.githubProfileId],
+    fields: [googleProfiles.id],
+    references: [users.googleProfileId],
   }),
 }));

@@ -1,6 +1,8 @@
-import { initDb } from "~/trpc/context";
+import { createDrizzle, createLibSqlClient } from "@snuber/db";
 
-export const testDb = initDb({
+export const testDbclient = createLibSqlClient({
   connectionType: "local",
   url: "file:test.sqlite",
 });
+
+export const testDb = createDrizzle({ client: testDbclient });

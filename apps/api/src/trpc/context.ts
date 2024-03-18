@@ -1,24 +1,18 @@
+import type { Database } from "@snuber/db";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import type { Session, User } from "lucia";
-import { createDrizzle, createLibSqlClient } from "@snuber/db";
 
-import type { Env } from "~/worker";
+import type { ServicesContext } from "~/app";
 
-export function createContext({
-  req,
-  resHeaders,
-  env,
-}: FetchCreateContextFnOptions & { env: Env; ctx: ExecutionContext }) {
-  const db = initDb({
-    connectionType: "remote",
-    url: env.DATABASE_URL,
-    authToken: env.DATABASE_AUTH_TOKEN,
-  });
-
-  return createInnerContext({ db, session: null, user: null });
+export function createTRPCContext({
+  services: { db },
+  req: _req,
+  resHeaders: _resHeaders,
+}: FetchCreateContextFnOptions & { services: ServicesContext }) {
+  return createInnerTRPCContext({ db, session: null, user: null });
 }
 
-export type Context = Awaited<ReturnType<typeof createContext>>;
+export type TRPCContext = Awaited<ReturnType<typeof createTRPCContext>>;
 
 type CreateInnerContextOptions = { db: Database } & (
   | {
@@ -31,12 +25,6 @@ type CreateInnerContextOptions = { db: Database } & (
     }
 );
 
-export function createInnerContext(opts: CreateInnerContextOptions) {
+export function createInnerTRPCContext(opts: CreateInnerContextOptions) {
   return opts;
 }
-
-export function initDb(opts: Parameters<typeof createLibSqlClient>[0]) {
-  return createDrizzle({ client: createLibSqlClient(opts) });
-}
-
-type Database = ReturnType<typeof initDb>;

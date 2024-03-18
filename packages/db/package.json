@@ -21,9 +21,6 @@
       "default": "./dist/index.mjs"
     }
   },
-  "files": [
-    "./drizzle"
-  ],
   "devDependencies": {
     "@snuber/eslint-config": "*",
     "@snuber/prettier-config": "*",

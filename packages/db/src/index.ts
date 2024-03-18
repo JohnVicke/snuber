@@ -1,6 +1,4 @@
-import path from "path";
 import { createClient } from "@libsql/client";
-import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/libsql";
 import { migrate as drizzleMigrate } from "drizzle-orm/libsql/migrator";
 
@@ -71,8 +69,8 @@ export * as schema from "./schema";
 export * from "drizzle-orm";
 
 export type Database = ReturnType<typeof createDrizzle>;
+export type LibSQLClient = ReturnType<typeof createLibSqlClient>;
 
-export function migrate(db: Database) {
-  const root = path.resolve(__dirname, "..");
-  return drizzleMigrate(db, { migrationsFolder: `${root}/drizzle` });
+export function migrate(db: Database, migrationsFolder: string) {
+  return drizzleMigrate(db, { migrationsFolder });
 }

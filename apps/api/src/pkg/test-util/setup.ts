@@ -1,10 +1,14 @@
+import * as path from "path";
 import { migrate, sql } from "@snuber/db";
 import { beforeAll, beforeEach } from "vitest";
 
 import { testDb } from "./test-db";
 
 beforeAll(async () => {
-  await migrate(testDb);
+  await migrate(
+    testDb,
+    path.resolve(__dirname, "../../../../../packages/db/drizzle"),
+  );
 });
 
 beforeEach(async () => {

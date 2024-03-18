@@ -4,10 +4,10 @@ import { describe, expect, test } from "vitest";
 import type { AppRouter } from ".";
 import { createCaller } from "~/pkg/test-util/caller";
 import { testDb } from "~/pkg/test-util/test-db";
-import { createInnerContext } from "../context";
+import { createInnerTRPCContext } from "../context";
 
 describe("fooRouter", () => {
-  const ctx = createInnerContext({
+  const ctx = createInnerTRPCContext({
     db: testDb,
     user: null,
     session: null,
