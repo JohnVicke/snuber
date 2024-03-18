@@ -1,13 +1,13 @@
 import type { inferProcedureInput } from "@trpc/server";
 import { describe, expect, test } from "vitest";
 
-import type { AppRouter } from ".";
+import type { AppRouter } from "~/exported";
 import { createCaller } from "~/pkg/test-util/caller";
 import { testDb } from "~/pkg/test-util/test-db";
-import { createInnerTRPCContext } from "../context";
+import { createInnerSnuberTRPCContext } from "../context";
 
 describe("fooRouter", () => {
-  const ctx = createInnerTRPCContext({
+  const ctx = createInnerSnuberTRPCContext({
     db: testDb,
     user: null,
     session: null,

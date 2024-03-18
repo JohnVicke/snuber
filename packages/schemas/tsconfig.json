@@ -5,6 +5,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "incremental": false,
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]

@@ -1,20 +1,17 @@
 import type { Database } from "@snuber/db";
-import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import type { Context } from "hono";
 import type { Session, User } from "lucia";
 
-import type { ServicesContext } from "~/app";
+import type { HonoEnv } from "~/app";
 
-export function createTRPCContext({
-  services: { db },
-  req: _req,
-  resHeaders: _resHeaders,
-}: FetchCreateContextFnOptions & { services: ServicesContext }) {
-  return createInnerTRPCContext({ db, session: null, user: null });
+export function createSnuberTRPCContext({ ctx }: { ctx: Context<HonoEnv> }) {
+  const { db } = ctx.get("services");
+  return createInnerSnuberTRPCContext({ db, session: null, user: null });
 }
 
-export type TRPCContext = Awaited<ReturnType<typeof createTRPCContext>>;
+export type SnuberTRPCContext = ReturnType<typeof createSnuberTRPCContext>;
 
-type CreateInnerContextOptions = { db: Database } & (
+type CreateInnerSnuberContextOptions = { db: Database } & (
   | {
       session: Session;
       user: User;
@@ -25,6 +22,8 @@ type CreateInnerContextOptions = { db: Database } & (
     }
 );
 
-export function createInnerTRPCContext(opts: CreateInnerContextOptions) {
+export function createInnerSnuberTRPCContext(
+  opts: CreateInnerSnuberContextOptions,
+) {
   return opts;
 }

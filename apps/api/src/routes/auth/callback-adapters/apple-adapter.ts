@@ -17,6 +17,6 @@ export class AppleAdapter extends CallbackAdapter {
   }
 
   public async getUser(_tokens: AppleTokens) {
-    return this.db.query.users.findFirst() as User;
+    return Promise.resolve({} as User);
   }
 }

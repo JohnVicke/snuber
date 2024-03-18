@@ -3,8 +3,8 @@ import type { z } from "zod";
 import { createApp } from "./app";
 import { SnuberEnv } from "./env";
 import { initMiddleware } from "./pkg/middleware";
-import { honoRouter } from "./pkg/routes";
-import { registerTRPCHandler } from "./trpc/register-trpc-handler";
+import { honoRouter } from "./routes";
+import { registerTRPCHandler } from "./trpc";
 
 export type Env = z.infer<typeof SnuberEnv>;
 
