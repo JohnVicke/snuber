@@ -35,9 +35,6 @@ importers:
 
   apps/api:
     dependencies:
-      '@hono/zod-openapi':
-        specifier: ^0.9.8
-        version: 0.9.8(hono@4.1.0)(zod@3.22.4)
       '@lucia-auth/adapter-sqlite':
         specifier: ^3.0.1
         version: 3.0.1(lucia@3.1.1)
@@ -50,9 +47,6 @@ importers:
       arctic:
         specifier: ^1.2.1
         version: 1.2.1
-      hono:
-        specifier: ^4.1.0
-        version: 4.1.0
       lucia:
         specifier: ^3.1.1
         version: 3.1.1
@@ -301,6 +295,9 @@ importers:
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(typescript@5.4.2)
+      typescript:
+        specifier: ^5.4.2
+        version: 5.4.2
 
   packages/ui:
     dependencies:
@@ -552,6 +549,8 @@ importers:
         specifier: ^5.4.2
         version: 5.4.2
 
+  tooling/github: {}
+
   tooling/prettier:
     dependencies:
       '@ianvs/prettier-plugin-sort-imports':
@@ -628,15 +627,6 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
-
-  /@asteasolutions/zod-to-openapi@5.5.0(zod@3.22.4):
-    resolution: {integrity: sha512-d5HwrvM6dOKr3XdeF+DmashGvfEc+1oiEfbscugsiwSTrFtuMa7ETpW9sTNnVgn+hJaz+PRxPQUYD7q9/5dUig==}
-    peerDependencies:
-      zod: ^3.20.2
-    dependencies:
-      openapi3-ts: 4.2.2
-      zod: 3.22.4
-    dev: false
 
   /@aw-web-design/x-default-browser@1.4.126:
     resolution: {integrity: sha512-Xk1sIhyNC/esHGGVjL/niHLowM0csl/kFO5uawBy4IrWwy0o1G8LGt3jP6nmWGz+USxeeqbihAmp/oVZju6wug==}
@@ -3464,29 +3454,6 @@ packages:
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
     dependencies:
       '@hapi/hoek': 9.3.0
-    dev: false
-
-  /@hono/zod-openapi@0.9.8(hono@4.1.0)(zod@3.22.4):
-    resolution: {integrity: sha512-NS6lvQEGnsjyQkp+aQjMARREz3WGf19y0+RiiJMVrihWlmKbGaJkPuOWpfFQG6FU9q+FVUyUCryXK+3J07GPAw==}
-    engines: {node: '>=16.0.0'}
-    peerDependencies:
-      hono: '>=3.11.3'
-      zod: 3.*
-    dependencies:
-      '@asteasolutions/zod-to-openapi': 5.5.0(zod@3.22.4)
-      '@hono/zod-validator': 0.1.11(hono@4.1.0)(zod@3.22.4)
-      hono: 4.1.0
-      zod: 3.22.4
-    dev: false
-
-  /@hono/zod-validator@0.1.11(hono@4.1.0)(zod@3.22.4):
-    resolution: {integrity: sha512-PQXeHUP0+36qpRt8yfeD7N2jbK3ETlGvSN6dMof/HwUC/APRokQRjpXZm4rrlG71Ft0aWE01+Bm4XejqPie5Uw==}
-    peerDependencies:
-      hono: '>=3.9.0'
-      zod: ^3.19.1
-    dependencies:
-      hono: 4.1.0
-      zod: 3.22.4
     dev: false
 
   /@hookform/resolvers@3.3.4(react-hook-form@7.51.0):
@@ -15259,12 +15226,6 @@ packages:
       define-lazy-prop: 2.0.0
       is-docker: 2.2.1
       is-wsl: 2.2.0
-
-  /openapi3-ts@4.2.2:
-    resolution: {integrity: sha512-+9g4actZKeb3czfi9gVQ4Br2Ju3KwhCAQJBNaKgye5KggqcBLIhFHH+nIkcm0BUX00TrAJl6dH4JWgM4G4JWrw==}
-    dependencies:
-      yaml: 2.4.1
-    dev: false
 
   /optionator@0.9.3:
     resolution: {integrity: sha512-JjCoypp+jKn1ttEFExxhetCKeJt9zhAgAve5FXHixTvFDW/5aEktX9bufBKLRRMdU7bNtpLfcGu94B3cdEJgjg==}

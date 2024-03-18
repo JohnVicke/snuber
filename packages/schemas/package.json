@@ -28,7 +28,8 @@
     "@snuber/prettier-config": "workspace:*",
     "@snuber/tailwind-config": "workspace:*",
     "@snuber/typescript-config": "workspace:*",
-    "tsup": "^8.0.2"
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.2"
   },
   "eslintConfig": {
     "root": true,
