@@ -76,18 +76,3 @@ export function migrate(db: Database) {
   const root = path.resolve(__dirname, "..");
   return drizzleMigrate(db, { migrationsFolder: `${root}/drizzle` });
 }
-
-export async function clearDb(db: Database) {
-  const query = sql<string>`SELECT table_name
-      FROM information_schema.tables
-      WHERE table_schema = 'public'
-        AND table_type = 'BASE TABLE';
-    `;
-
-  const tables = await db.execute(query);
-
-  for (const table of tables) {
-    const query = sql.raw(`TRUNCATE TABLE ${table.table_name} CASCADE;`);
-    await db.execute(query);
-  }
-}
