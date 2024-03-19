@@ -4,13 +4,15 @@
   "version": "0.0.1",
   "private": true,
   "exports": {
-    ".": "./src/trpc/index.ts"
+    "./trpc": "./src/trpc/index.ts",
+    "./hono": "./src/app.ts"
   },
   "scripts": {
     "build": "tsc",
     "dev": "pnpm build && wrangler dev",
     "deploy": "pnpm build && wrangler deploy --minify",
-    "test": "vitest run -c vitest.config.ts"
+    "test": "vitest run -c vitest.config.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.0",

@@ -2,6 +2,7 @@
   "name": "snuber",
   "scripts": {
     "build": "turbo build",
+    "test": "turbo test",
     "db:push": "pnpm -F db push",
     "db:studio": "pnpm -F db studio",
     "clean": "git clean -xdf node_modules",

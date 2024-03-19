@@ -61,7 +61,10 @@ export interface CreateDrizzleOptions {
 }
 
 export const createDrizzle = (options: CreateDrizzleOptions) => {
-  return drizzle(options.client, { schema, logger: true });
+  return drizzle(options.client, {
+    schema,
+    logger: process.env.NODE_ENV === "development",
+  });
 };
 
 export * as schema from "./schema";
