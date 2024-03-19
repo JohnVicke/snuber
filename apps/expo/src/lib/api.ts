@@ -1,15 +1,16 @@
 import * as Linking from "expo-linking";
-import * as SecureStore from "expo-secure-store";
 import * as Browser from "expo-web-browser";
 
 import { getBaseAPIUrl, getBaseExpoUrl } from "~/utils/get-base-url";
+import { Logger } from "~/utils/logger";
+import { secureStore } from "~/utils/secure-store";
 
-const API_BASE_URL = `${getBaseAPIUrl(8787)}/api/v1`;
+const API_BASE_URL = `${getBaseAPIUrl()}/api/v1`;
 
 export async function signInWithGoogle() {
   const result = await Browser.openAuthSessionAsync(
     `${API_BASE_URL}/auth/google`,
-    `${getBaseExpoUrl(8081)}/${8081}/login`,
+    `${getBaseExpoUrl(8081)}`,
   );
 
   if (result.type !== "success") return;
@@ -19,7 +20,8 @@ export async function signInWithGoogle() {
 
   if (!sessionToken) return;
 
-  await SecureStore.setItemAsync("session_token", sessionToken);
+  Logger.info("Login succeded");
+  await secureStore().set("session_token", sessionToken);
 }
 
 export async function ping() {

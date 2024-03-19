@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { generateCodeVerifier, generateState } from "arctic";
+import { setCookie } from "hono/cookie";
 import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 
@@ -54,6 +55,22 @@ authRouter.get("/google", async (c) => {
     },
   );
 
+  setCookie(c, "google-oauth-state", state, {
+    path: "/",
+    secure: c.env.NODE_ENV === "production",
+    httpOnly: true,
+    maxAge: 60 * 10,
+    sameSite: "Lax",
+  });
+
+  setCookie(c, "google-oauth-verifier", verifier, {
+    path: "/",
+    secure: c.env.NODE_ENV === "production",
+    httpOnly: true,
+    maxAge: 60 * 10,
+    sameSite: "Lax",
+  });
+
   return c.redirect(url.toString());
 });
 
@@ -76,9 +93,7 @@ authRouter.get(
       const tokens = await adapter.validateRequest();
       const user = await adapter.getUser(tokens);
       const session = await lucia.createSession(user.id, {});
-      return Response.redirect(
-        `exp://192.168.1.89:8081?session_token=${session.id}`,
-      );
+      return c.redirect(`exp://192.168.1.89:8081?session_token=${session.id}`);
     } catch (e) {
       console.log(e);
       return c.json({ oopsie: "daisy" }, { status: 500 });

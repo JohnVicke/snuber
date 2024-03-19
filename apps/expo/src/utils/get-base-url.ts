@@ -12,8 +12,8 @@ function getBaseIP() {
   return localhost;
 }
 
-export function getBaseAPIUrl(port: number) {
-  return `http://${getBaseIP()}:${port}`;
+export function getBaseAPIUrl() {
+  return "https://bright-kingfish-monthly.ngrok-free.app";
 }
 
 export function getBaseExpoUrl(port: number) {

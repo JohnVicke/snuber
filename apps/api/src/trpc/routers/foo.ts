@@ -6,6 +6,9 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const fooRouter = createTRPCRouter({
+  test: publicProcedure.mutation(() => {
+    return "foo";
+  }),
   add: publicProcedure
     .input(z.object({ name: z.string() }))
     .query(async ({ input, ctx: { db } }) => {
@@ -15,8 +18,8 @@ export const fooRouter = createTRPCRouter({
           id: generateId(15),
           name: input.name,
         })
-        .returning();
 
+        .returning();
       if (!res?.[0]) {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }

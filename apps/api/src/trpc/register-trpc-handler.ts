@@ -7,7 +7,7 @@ import { appRouter } from "./root";
 export function registerTRPCHandler(app: App) {
   app.use("/trpc/*", (c) => {
     const res = fetchRequestHandler({
-      endpoint: "/v1/trpc",
+      endpoint: "/trpc",
       req: c.req.raw,
       router: appRouter,
       createContext: (_options) =>

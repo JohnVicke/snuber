@@ -47,8 +47,6 @@ export class GoogleAdapter extends CallbackAdapter {
       return dbUser;
     }
 
-    console.log(profile);
-
     return await this.db.transaction(async (tx) => {
       await tx.insert(schema.googleProfiles).values({
         id: profile.id,

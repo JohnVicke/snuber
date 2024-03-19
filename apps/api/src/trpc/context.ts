@@ -6,6 +6,9 @@ import type { HonoEnv } from "~/app";
 
 export function createSnuberTRPCContext({ ctx }: { ctx: Context<HonoEnv> }) {
   const { db } = ctx.get("services");
+  const auth = ctx.req.header("Authorization");
+  const source = ctx.req.header("x-trpc-source");
+  console.log({ auth, source });
   return createInnerSnuberTRPCContext({ db, session: null, user: null });
 }
 
