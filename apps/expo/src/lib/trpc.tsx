@@ -1,4 +1,4 @@
-import type { AppRouter } from "@snuber/api";
+import type { AppRouter } from "@snuber/api/trpc";
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, loggerLink } from "@trpc/client";

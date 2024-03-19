@@ -2,9 +2,9 @@
 /* eslint-disable import/export */
 /* eslint-disable @typescript-eslint/ban-types */
 declare module "expo-router" {
-  import type { LinkProps as OriginalLinkProps } from 'expo-router/build/link/Link';
-  import type { Router as OriginalRouter } from 'expo-router/build/types';
-  export * from 'expo-router/build';
+  import type { LinkProps as OriginalLinkProps } from "expo-router/build/link/Link";
+  import type { Router as OriginalRouter } from "expo-router/build/types";
+  export * from "expo-router/build";
 
   // prettier-ignore
   type StaticRoutes = `/`;
@@ -13,11 +13,14 @@ declare module "expo-router" {
   // prettier-ignore
   type DynamicRouteTemplate = never;
 
-  type RelativePathString = `./${string}` | `../${string}` | '..';
+  type RelativePathString = `./${string}` | `../${string}` | "..";
   type AbsoluteRoute = DynamicRouteTemplate | StaticRoutes;
   type ExternalPathString = `${string}:${string}`;
 
-  type ExpoRouterRoutes = DynamicRouteTemplate | StaticRoutes | RelativePathString;
+  type ExpoRouterRoutes =
+    | DynamicRouteTemplate
+    | StaticRoutes
+    | RelativePathString;
   export type AllRoutes = ExpoRouterRoutes | ExternalPathString;
 
   /****************
@@ -25,7 +28,10 @@ declare module "expo-router" {
    ****************/
 
   type SearchOrHash = `?${string}` | `#${string}`;
-  type UnknownInputParams = Record<string, string | number | (string | number)[]>;
+  type UnknownInputParams = Record<
+    string,
+    string | number | (string | number)[]
+  >;
   type UnknownOutputParams = Record<string, string | string[]>;
 
   /**
@@ -43,27 +49,28 @@ declare module "expo-router" {
   type SingleRoutePart<S extends string> = S extends `${string}/${string}`
     ? never
     : S extends `${string}${SearchOrHash}`
-    ? never
-    : S extends ''
-    ? never
-    : S extends `(${string})`
-    ? never
-    : S extends `[${string}]`
-    ? never
-    : S;
+      ? never
+      : S extends ""
+        ? never
+        : S extends `(${string})`
+          ? never
+          : S extends `[${string}]`
+            ? never
+            : S;
 
   /**
    * Return only the CatchAll router part. If the string has search parameters or a hash return never
    */
-  type CatchAllRoutePart<S extends string> = S extends `${string}${SearchOrHash}`
-    ? never
-    : S extends ''
-    ? never
-    : S extends `${string}(${string})${string}`
-    ? never
-    : S extends `${string}[${string}]${string}`
-    ? never
-    : S;
+  type CatchAllRoutePart<S extends string> =
+    S extends `${string}${SearchOrHash}`
+      ? never
+      : S extends ""
+        ? never
+        : S extends `${string}(${string})${string}`
+          ? never
+          : S extends `${string}[${string}]${string}`
+            ? never
+            : S;
 
   // type OptionalCatchAllRoutePart<S extends string> = S extends `${string}${SearchOrHash}` ? never : S
 
@@ -73,7 +80,9 @@ declare module "expo-router" {
    * 'test'      -> never
    * '[...test]' -> '...test'
    */
-  type IsParameter<Part> = Part extends `[${infer ParamName}]` ? ParamName : never;
+  type IsParameter<Part> = Part extends `[${infer ParamName}]`
+    ? ParamName
+    : never;
 
   /**
    * Return a union of all parameter names. If there are no names return never
@@ -91,12 +100,12 @@ declare module "expo-router" {
    * /(group)/123/abc/[id]/[...rest] -> ['(group)', '123', 'abc', '[id]', '[...rest]'
    */
   type RouteSegments<Path> = Path extends `${infer PartA}/${infer PartB}`
-    ? PartA extends '' | '.'
+    ? PartA extends "" | "."
       ? [...RouteSegments<PartB>]
       : [PartA, ...RouteSegments<PartB>]
-    : Path extends ''
-    ? []
-    : [Path];
+    : Path extends ""
+      ? []
+      : [Path];
 
   /**
    * Returns a Record of the routes parameters as strings and CatchAll parameters
@@ -110,7 +119,9 @@ declare module "expo-router" {
   type InputRouteParams<Path> = {
     [Key in ParameterNames<Path> as Key extends `...${infer Name}`
       ? Name
-      : Key]: Key extends `...${string}` ? (string | number)[] : string | number;
+      : Key]: Key extends `...${string}`
+      ? (string | number)[]
+      : string | number;
   } & UnknownInputParams;
 
   type OutputRouteParams<Path> = {
@@ -125,8 +136,8 @@ declare module "expo-router" {
   export type SearchParams<T extends AllRoutes> = T extends DynamicRouteTemplate
     ? OutputRouteParams<T>
     : T extends StaticRoutes
-    ? never
-    : UnknownOutputParams;
+      ? never
+      : UnknownOutputParams;
 
   /**
    * Route is mostly used as part of Href to ensure that a valid route is provided
@@ -153,36 +164,45 @@ declare module "expo-router" {
                 ? T
                 : never
               : T extends DynamicRoutes<infer _>
-              ? T
-              : never)
+                ? T
+                : never)
     : never;
 
   /*********
    * Href  *
    *********/
 
-  export type Href<T> = T extends Record<'pathname', string> ? HrefObject<T> : Route<T>;
+  export type Href<T> =
+    T extends Record<"pathname", string> ? HrefObject<T> : Route<T>;
 
   export type HrefObject<
-    R extends Record<'pathname', string>,
-    P = R['pathname'],
+    R extends Record<"pathname", string>,
+    P = R["pathname"],
   > = P extends DynamicRouteTemplate
     ? { pathname: P; params: InputRouteParams<P> }
     : P extends Route<P>
-    ? { pathname: Route<P> | DynamicRouteTemplate; params?: never | InputRouteParams<never> }
-    : never;
+      ? {
+          pathname: Route<P> | DynamicRouteTemplate;
+          params?: never | InputRouteParams<never>;
+        }
+      : never;
 
   /***********************
    * Expo Router Exports *
    ***********************/
 
-  export type Router = Omit<OriginalRouter, 'push' | 'replace' | 'setParams'> & {
+  export type Router = Omit<
+    OriginalRouter,
+    "push" | "replace" | "setParams"
+  > & {
     /** Navigate to the provided href. */
     push: <T>(href: Href<T>) => void;
     /** Navigate to route without appending to the history. */
     replace: <T>(href: Href<T>) => void;
     /** Update the current route query params. */
-    setParams: <T = ''>(params?: T extends '' ? Record<string, string> : InputRouteParams<T>) => void;
+    setParams: <T = "">(
+      params?: T extends "" ? Record<string, string> : InputRouteParams<T>,
+    ) => void;
   };
 
   /** The imperative router. */
@@ -215,7 +235,7 @@ declare module "expo-router" {
 
   /** Redirects to the href as soon as the component is mounted. */
   export const Redirect: <T>(
-    props: React.PropsWithChildren<{ href: Href<T> }>
+    props: React.PropsWithChildren<{ href: Href<T> }>,
   ) => JSX.Element;
 
   /************
@@ -238,5 +258,9 @@ declare module "expo-router" {
 
   export function useSegments<
     T extends AbsoluteRoute | RouteSegments<AbsoluteRoute> | RelativePathString,
-  >(): T extends AbsoluteRoute ? RouteSegments<T> : T extends string ? string[] : T;
+  >(): T extends AbsoluteRoute
+    ? RouteSegments<T>
+    : T extends string
+      ? string[]
+      : T;
 }

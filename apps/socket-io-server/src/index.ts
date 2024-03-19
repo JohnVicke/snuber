@@ -31,7 +31,7 @@ const subClient = pubClient.duplicate();
 
 io.adapter(createAdapter(pubClient, subClient));
 
-io.on("connection", (socket) => {
+io.on("connection", (_socket) => {
   console.log("a user connected");
 });
 

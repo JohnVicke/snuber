@@ -1,28 +1,35 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "63e367f9-80fb-471b-8e1b-b2b26647857d",
+  "id": "9392003b-c0e6-4938-bc40-e101adb909ae",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "github_profile": {
-      "name": "github_profile",
+    "google_profile": {
+      "name": "google_profile",
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": true,
           "notNull": true,
           "autoincrement": false
         },
-        "avatar_url": {
-          "name": "avatar_url",
+        "picture": {
+          "name": "picture",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
-        "username": {
-          "name": "username",
+        "given_name": {
+          "name": "given_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "family_name": {
+          "name": "family_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -102,9 +109,9 @@
           "notNull": false,
           "autoincrement": false
         },
-        "github_profile_id": {
-          "name": "github_profile_id",
-          "type": "integer",
+        "google_profile_id": {
+          "name": "google_profile_id",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -128,12 +135,12 @@
         }
       },
       "foreignKeys": {
-        "user_github_profile_id_github_profile_id_fk": {
-          "name": "user_github_profile_id_github_profile_id_fk",
+        "user_google_profile_id_google_profile_id_fk": {
+          "name": "user_google_profile_id_google_profile_id_fk",
           "tableFrom": "user",
-          "tableTo": "github_profile",
+          "tableTo": "google_profile",
           "columnsFrom": [
-            "github_profile_id"
+            "google_profile_id"
           ],
           "columnsTo": [
             "id"

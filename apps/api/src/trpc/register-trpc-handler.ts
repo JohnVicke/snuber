@@ -1,6 +1,6 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-import type { App } from "~/app";
+import type { App } from "../app";
 import { createSnuberTRPCContext } from "./context";
 import { appRouter } from "./root";
 

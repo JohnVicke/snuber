@@ -6,6 +6,7 @@
       "dependsOn": ["^topo"]
     },
     "build": {
+      "cache": true,
       "env": [
         "NODE_ENV",
         "DATABASE_CONNECTION_TYPE",
@@ -25,16 +26,18 @@
         ".vercel/output/**"
       ]
     },
+    "test": {
+      "cache": false
+    },
+    "@snuber/api#test": {
+      "dependsOn": ["@snuber/db#build"]
+    },
     "dev": {
       "persistent": true,
       "cache": false
     },
-    "@snuber/platform#dev": {
-      "dependsOn": [
-        "@snuber/ui#build",
-        "@snuber/db#build",
-        "@snuber/schemas#build"
-      ]
+    "@snuber/api#dev": {
+      "dependsOn": ["@snuber/db#build", "@snuber/schemas#build"]
     },
     "format": {
       "outputs": ["node_modules/.cache/.prettiercache"],

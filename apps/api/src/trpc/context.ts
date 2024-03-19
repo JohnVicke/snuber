@@ -2,7 +2,7 @@ import type { Database } from "@snuber/db";
 import type { Context } from "hono";
 import type { Session, User } from "lucia";
 
-import type { HonoEnv } from "~/app";
+import type { HonoEnv } from "../app";
 
 export function createSnuberTRPCContext({ ctx }: { ctx: Context<HonoEnv> }) {
   const { db } = ctx.get("services");
