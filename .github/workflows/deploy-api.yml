@@ -1,0 +1,70 @@
+name: Deploy API
+
+on:
+  push:
+    branches: [main]
+
+concurrency: "only one deploy at a time"
+
+env:
+  FORCE_COLOR: 3
+
+jobs:
+  staging:
+    name: Deploy Staging
+    environment: Staging
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Build
+        run: pnpm turbo run build --filter=@snuber/api
+
+      - name: Deploy
+        run: wrangler deploy --env=staging --var VERSION:$(git rev-parse --short HEAD)
+        working-directory: apps/api
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+  staging_tests:
+    name: E2E Staging
+    environment: Staging
+    needs: staging
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Build
+        run: pnpm turbo run build --filter=@snuber/api
+
+      - name: Test
+        run: pnpm test
+        working-directory: apps/api
+
+  production:
+    name: Deploy Production
+    environment: Production
+    needs: staging_tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Build
+        run: pnpm turbo run build --filter=@snuber/api
+
+      - name: Deploy
+        run: wrangler deploy --env=production --var VERSION:$(git rev-parse --short HEAD)
+        working-directory: apps/api
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

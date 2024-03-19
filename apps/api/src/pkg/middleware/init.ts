@@ -25,12 +25,12 @@ export function initMiddleware(): MiddlewareHandler<HonoEnv> {
           redirectURI: c.env.GOOGLE_REDIRECT_URI,
         },
         apple: {
-          redirectURI: c.env.APPLE_REDIRECT_URI,
+          redirectURI: "not implemented",
           credentials: {
-            clientId: c.env.APPLE_CLIENT_ID,
-            keyId: c.env.APPLE_KEY_ID,
-            teamId: c.env.APPLE_TEAM_ID,
-            certificate: c.env.APPLE_CERTIFICATE,
+            clientId: "not implemented",
+            keyId: "not implemented",
+            teamId: "not implemented",
+            certificate: "not implemented",
           },
         },
       },

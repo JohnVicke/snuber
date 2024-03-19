@@ -57,7 +57,7 @@ authRouter.get("/google", async (c) => {
 
   setCookie(c, "google-oauth-state", state, {
     path: "/",
-    secure: c.env.NODE_ENV === "production",
+    secure: c.env.ENVIRONMENT === "production",
     httpOnly: true,
     maxAge: 60 * 10,
     sameSite: "Lax",
@@ -65,7 +65,7 @@ authRouter.get("/google", async (c) => {
 
   setCookie(c, "google-oauth-verifier", verifier, {
     path: "/",
-    secure: c.env.NODE_ENV === "production",
+    secure: c.env.ENVIRONMENT === "production",
     httpOnly: true,
     maxAge: 60 * 10,
     sameSite: "Lax",

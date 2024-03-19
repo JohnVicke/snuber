@@ -58,12 +58,16 @@ export const createLibSqlClient = (options: CreateLibSqlClientOptions) => {
 
 export interface CreateDrizzleOptions {
   client: ReturnType<typeof createLibSqlClient>;
+  logger?: boolean;
 }
 
-export const createDrizzle = (options: CreateDrizzleOptions) => {
-  return drizzle(options.client, {
+export const createDrizzle = ({
+  logger = false,
+  client,
+}: CreateDrizzleOptions) => {
+  return drizzle(client, {
     schema,
-    logger: process.env.NODE_ENV === "development",
+    logger,
   });
 };
 

@@ -8,7 +8,7 @@
     "build": {
       "cache": true,
       "env": [
-        "NODE_ENV",
+        "ENVIRONMENT",
         "DATABASE_CONNECTION_TYPE",
         "DATABASE_URL",
         "DATABASE_AUTH_TOKEN",
