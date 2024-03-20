@@ -2,7 +2,7 @@ import * as path from "path";
 import { migrate, sql } from "@snuber/db";
 import { beforeAll, beforeEach } from "vitest";
 
-import { testDb } from "./test-db";
+import { testDb } from "./test-context";
 
 beforeAll(async () => {
   await migrate(

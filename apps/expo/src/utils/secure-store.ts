@@ -7,13 +7,16 @@ interface SnuberSecureStore {
 export function secureStore() {
   return {
     get(key: keyof SnuberSecureStore) {
-      return SecureStore.getItemAsync("session_token") as
+      return SecureStore.getItemAsync(key) as
         | Promise<SnuberSecureStore[typeof key]>
         | Promise<null>;
     },
 
     set(key: keyof SnuberSecureStore, value: SnuberSecureStore[typeof key]) {
       return SecureStore.setItemAsync(key, value);
+    },
+    delete(key: keyof SnuberSecureStore) {
+      return SecureStore.deleteItemAsync(key);
     },
   };
 }

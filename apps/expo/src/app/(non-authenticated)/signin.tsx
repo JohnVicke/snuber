@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import { Signin } from "~/modules/not-authenticated/signin";
 
-export default function SigninView() {
-  return (
-    <View>
-      <Text>sign in view</Text>
-    </View>
-  );
+export default function SigninScreen() {
+  return <Signin />;
 }

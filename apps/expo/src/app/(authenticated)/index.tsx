@@ -1,12 +1,26 @@
-import React from "react";
-import { View } from "react-native";
+import { router } from "expo-router";
 
-import { SnuberMap } from "~/modules/authenticated/snuber-map";
+import { Screen } from "~/components/screen";
+import { Button } from "~/components/ui/button";
+import { Text } from "~/components/ui/text";
+import { trpc } from "~/lib/trpc";
+import { secureStore } from "~/utils/secure-store";
 
 export default function AuthenticatedLandingPage() {
+  const { mutate } = trpc.auth.signout.useMutation({
+    onSettled() {
+      void secureStore().delete("session_token");
+      router.push("/(non-authenticated)");
+    },
+  });
   return (
-    <View className="flex-1">
-      <SnuberMap />
-    </View>
+    <Screen>
+      <Button onPress={() => router.push("/(authenticated)/map")}>
+        <Text>Go to map</Text>
+      </Button>
+      <Button onPress={() => void mutate()}>
+        <Text>sign out</Text>
+      </Button>
+    </Screen>
   );
 }

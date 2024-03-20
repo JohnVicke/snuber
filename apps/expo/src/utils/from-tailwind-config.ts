@@ -1,0 +1,52 @@
+const colors = {
+  light: {
+    background: "hsl(250 62% 98%)",
+    foreground: "hsl(250 54% 5%)",
+    muted: "hsl(10 21% 91%)",
+    "muted-foreground": "hsl(10 10% 29%)",
+    popover: "hsl(250 62% 98%)",
+    "popover-foreground": "hsl(250 54% 5%)",
+    card: "hsl(250 62% 98%)",
+    "card-foreground": "hsl(250 54% 5%)",
+    border: "hsl(250 6% 88%)",
+    input: "hsl(250 6% 88%)",
+    primary: "hsl(250 90% 85%)",
+    "primary-foreground": "hsl(250 90% 25%)",
+    secondary: "hsl(10 90% 85%)",
+    "secondary-foreground": "hsl(10 90% 25%)",
+    accent: "hsl(130 90% 85%)",
+    "accent-foreground": "hsl(130 90% 5%)",
+    destructive: "hsl(0 84% 38%)",
+    "destructive-foreground": "hsl(0 84% 98%)",
+    ring: "hsl(250 90% 85%)",
+    radius: "hsl(0.5rem)",
+  },
+  dark: {
+    background: "hsl(240 22.73% 8.63%)",
+    foreground: "hsl(226.15 63.93% 88.04%)",
+    muted: "hsl(240 21.31% 11.96%)",
+    "muted-foreground": "hsl(10 10% 71%)",
+    popover: "hsl(236.84 16.24% 22.94%)",
+    "popover-foreground": "hsl(250 23% 98%)",
+    card: "hsl(240 21.31% 11.96%)",
+    "card-foreground": "hsl(226.67 35.29% 80%)",
+    border: "hsl(250 6% 12%)",
+    input: "hsl(250 6% 12%)",
+    primary: "hsl(231.89 97.37% 85.1%)",
+    "primary-foreground": "hsl(240 22.73% 8.63%)",
+    secondary: "hsl(236.84 16.24% 22.94%)",
+    "secondary-foreground": "hsl(226.15 63.93% 88.04%)",
+    accent: "hsl(316.47 71.83% 86.08%)",
+    "accent-foreground": "hsl(130 90% 5%)",
+    destructive: "hsl(350.4 65.22% 77.45%)",
+    "destructive-foreground": "hsl(240 22.73% 8.63%)",
+    ring: "hsl(267.41 83.51% 80.98%)",
+  },
+} as const;
+
+export function colorFromConfig<TMode extends "light" | "dark">(
+  color: keyof (typeof colors)[TMode],
+  mode: TMode,
+) {
+  return colors[mode][color];
+}

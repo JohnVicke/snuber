@@ -40,9 +40,6 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      borderColor: {
-        DEFAULT: "hsl(var(--border))",
-      },
     },
   },
 } satisfies Config;

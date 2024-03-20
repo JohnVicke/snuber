@@ -12,6 +12,7 @@
     "dev": "pnpm build && wrangler dev",
     "deploy": "pnpm build && wrangler deploy --minify",
     "test": "vitest run -c vitest.config.ts",
+    "test:watch": "vitest -c vitest.config.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

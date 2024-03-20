@@ -3,12 +3,10 @@ import { describe, expect, test } from "vitest";
 
 import type { AppRouter } from "~/exported";
 import { createCaller } from "~/pkg/test-util/caller";
-import { testDb } from "~/pkg/test-util/test-db";
-import { createInnerSnuberTRPCContext } from "../context";
+import { createTestContext } from "~/pkg/test-util/test-context";
 
 describe("fooRouter", () => {
-  const ctx = createInnerSnuberTRPCContext({
-    db: testDb,
+  const ctx = createTestContext({
     user: null,
     session: null,
   });

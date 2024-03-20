@@ -21,7 +21,6 @@ const errorLink: TRPCLink<AppRouter> = () => {
           observer.next(value);
         },
         error(err) {
-          observer.error(err);
           if (err.data?.code === "UNAUTHORIZED") {
             router.push("/(non-authenticated)/signin");
           }
@@ -40,7 +39,6 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
   const [trpcClient] = React.useState(() =>
     trpc.createClient({
       links: [
-        errorLink,
         loggerLink({
           enabled: (opts) =>
             process.env.NODE_ENV === "development" ||
@@ -60,6 +58,7 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
             return Object.fromEntries(headers);
           },
         }),
+        errorLink,
       ],
     }),
   );

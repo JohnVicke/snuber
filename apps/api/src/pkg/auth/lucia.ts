@@ -4,7 +4,7 @@ import { LibSQLAdapter } from "@lucia-auth/adapter-sqlite";
 import { Apple, Google } from "arctic";
 import { Lucia } from "lucia";
 
-interface InitAuthOptions {
+export interface InitAuthOptions {
   client: LibSQLClient;
   providers: {
     apple: {

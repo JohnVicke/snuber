@@ -15,7 +15,7 @@ export default function NonAuthenticatedLayout() {
     );
   }
 
-  if (!token) {
+  if (token) {
     return <Redirect href="/(authenticated)" />;
   }
 

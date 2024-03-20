@@ -1,10 +1,12 @@
 import React from "react";
-import { Text, View } from "react-native";
+
+import { Screen } from "~/components/screen";
+import { Text } from "~/components/ui/text";
 
 export default function NonAuthenticatedLandingPage() {
   return (
-    <View className="flex-1">
+    <Screen>
       <Text>TRPC ping</Text>
-    </View>
+    </Screen>
   );
 }

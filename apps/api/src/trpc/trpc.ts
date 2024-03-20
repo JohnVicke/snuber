@@ -19,3 +19,5 @@ export const auth = t.middleware(({ next, ctx }) => {
     ctx,
   });
 });
+
+export const protectedProcedure = t.procedure.use(auth);
