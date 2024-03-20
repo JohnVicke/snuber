@@ -1,2 +1,1 @@
-global.$$require_external =
-  typeof window === "undefined" ? require : () => null;
+global.$$require_external = typeof window === "undefined" ? require : () => null;

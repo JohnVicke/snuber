@@ -23,7 +23,7 @@ const errorLink: TRPCLink<AppRouter> = () => {
         error(err) {
           observer.error(err);
           if (err.data?.code === "UNAUTHORIZED") {
-            router.replace("/(non-authenticated)/signin");
+            router.push("/(non-authenticated)/signin");
           }
         },
         complete() {
