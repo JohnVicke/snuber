@@ -36,4 +36,7 @@ yarn-error.log*
 
 # Misc
 .DS_Store
+test.sqlite
 *.pem
+.expo
+expo-env.d.ts
