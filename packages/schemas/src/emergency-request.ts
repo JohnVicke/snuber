@@ -1,13 +1,10 @@
+import type { z } from "zod";
 import { schema } from "@snuber/db";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { z } from "zod";
 
 export const EmergencyRequestInsert = createInsertSchema(
   schema.emergencyRequest,
-  {
-    status: z.enum(["pending", "accepted", "cancelled", "completed"]),
-  },
-).omit({ id: true, userId: true });
+).omit({ id: true, userId: true, status: true, createdAt: true });
 
 export const EmergencyRequest = createSelectSchema(schema.emergencyRequest);
 

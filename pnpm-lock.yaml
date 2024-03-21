@@ -47,6 +47,9 @@ importers:
       '@snuber/db':
         specifier: workspace:^0.0.1
         version: link:../../packages/db
+      '@snuber/schemas':
+        specifier: workspace:^0.0.1
+        version: link:../../packages/schemas
       '@trpc/server':
         specifier: 11.0.0-next-beta.294
         version: 11.0.0-next-beta.294

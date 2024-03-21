@@ -2,11 +2,11 @@ import * as path from "path";
 import { migrate, sql } from "@snuber/db";
 import { beforeAll, beforeEach } from "vitest";
 
-import { testDb } from "./test-context";
+import { testDB } from "./test-db";
 
 beforeAll(async () => {
   await migrate(
-    testDb,
+    testDB,
     path.resolve(__dirname, "../../../../../packages/db/drizzle"),
   );
 });
@@ -16,7 +16,7 @@ beforeEach(async () => {
 });
 
 async function reset() {
-  const tableSchema = testDb._.schema;
+  const tableSchema = testDB._.schema;
   if (!tableSchema) {
     throw new Error("No table schema found");
   }
@@ -25,7 +25,7 @@ async function reset() {
     return sql.raw(`DELETE FROM ${table.dbName};`);
   });
 
-  await testDb.transaction(async (tx) => {
+  await testDB.transaction(async (tx) => {
     await Promise.all(
       queries.map(async (query) => {
         if (query) await tx.run(query);

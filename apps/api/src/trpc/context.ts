@@ -1,5 +1,6 @@
 import type { Context } from "hono";
 import type { Session, User } from "lucia";
+import { generateId as luciaGenerateId } from "lucia";
 
 import type { HonoEnv, ServicesContext } from "../app";
 
@@ -39,10 +40,16 @@ type CreateInnerSnuberContextOptions = ServicesContext &
       }
   ) & {
     source?: string;
+    generateId?: typeof luciaGenerateId;
   };
 
-export function createInnerSnuberTRPCContext(
-  opts: CreateInnerSnuberContextOptions,
-) {
-  return opts;
+export function createInnerSnuberTRPCContext({
+  generateId = luciaGenerateId,
+  ...opts
+}: CreateInnerSnuberContextOptions) {
+  return { generateId, ...opts };
 }
+
+export type InnerSnuberTRPCContext = ReturnType<
+  typeof createInnerSnuberTRPCContext
+>;

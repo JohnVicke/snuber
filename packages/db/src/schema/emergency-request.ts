@@ -6,6 +6,6 @@ export const emergencyRequest = sqliteTable("emergency_request", {
   latitude: real("latitude").notNull(),
   longitude: real("longitude").notNull(),
   accuracy: real("accuracy"),
-  status: text("statu").notNull(),
-  createAt: integer("expires_at").notNull(),
+  status: text("status").notNull(),
+  createdAt: integer("created_at").notNull(),
 });

@@ -1,32 +1,18 @@
-import type { Session, User } from "lucia";
-import { createDate, TimeSpan } from "oslo";
+import { TRPCError } from "@trpc/server";
 import { describe, expect, test } from "vitest";
 
-import { createCaller } from "~/pkg/test-util/caller";
-import { createTestContext } from "~/pkg/test-util/test-context";
+import { AuthHarness, NonAuthHarness } from "~/pkg/test-util/harness";
 
 describe("authRouter", () => {
-  const ctx = createTestContext({
-    user: {
-      id: "userid",
-      email: "tester@testsson.com",
-      imageUrl: null,
-      emailVerified: false,
-      googleProfileId: null,
-    } satisfies User,
-    session: {
-      id: "session-id",
-      fresh: true,
-      userId: "userid",
-      expiresAt: createDate(new TimeSpan(30, "d")),
-    } satisfies Session,
+  test("protected route should return unauthorized given no user", async () => {
+    const { caller } = new NonAuthHarness().create();
+    await expect(() => caller.auth.me()).rejects.toThrowError(
+      new TRPCError({ code: "UNAUTHORIZED" }),
+    );
   });
-
-  const caller = createCaller(ctx);
-
   test("signout", async () => {
+    const { caller } = new AuthHarness().create();
     const result = await caller.auth.signout();
-
     expect(result.ok).toBe(true);
   });
 });
