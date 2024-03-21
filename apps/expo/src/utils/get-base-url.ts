@@ -1,6 +1,6 @@
 import Constants from "expo-constants";
 
-function getBaseIP() {
+export function getBaseIP() {
   const debuggerHost = Constants.expoConfig?.hostUri;
   const localhost = debuggerHost?.split(":")[0];
 

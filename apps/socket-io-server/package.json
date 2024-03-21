@@ -1,8 +1,11 @@
 {
-  "name": "socket-io-server",
+  "name": "@snuber/socket.io-server",
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "exports": {
+    "./types": "./src/types.ts"
+  },
   "scripts": {
     "build": "esbuild src/index.ts --bundle --platform=node --packages=external --outfile=dist/index.js --format=esm",
     "start": "node dist/index.js",

@@ -8,10 +8,12 @@ import { ChevronLeft } from "~/components/icons";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
 import { colorFromConfig } from "~/utils/from-tailwind-config";
+import { useRealtime } from "./realtime-provider/realtime-context";
 import { SnuberMapProvider } from "./snuber-map/snuber-map-context";
 import { useLocation } from "./use-location";
 
 export function Map() {
+  const { socket } = useRealtime();
   const { colorScheme = "dark" } = useColorScheme();
   const { isLoading, status } = useLocation();
 
@@ -68,7 +70,11 @@ export function Map() {
       >
         <BottomSheetView className="z-10 mx-8 gap-y-4">
           <Text>hello</Text>
-          <Button>
+          <Button
+            onPress={() => {
+              socket.emit("emergency", "im in a bit of a pickle");
+            }}
+          >
             <Text>Skicka anrop!</Text>
           </Button>
         </BottomSheetView>

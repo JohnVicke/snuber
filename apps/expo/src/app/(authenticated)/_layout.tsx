@@ -2,6 +2,7 @@ import { Text, View } from "react-native";
 import { Redirect, Stack } from "expo-router";
 
 import { useAuthToken } from "~/hooks/use-auth-token";
+import { RealtimeProvider } from "~/modules/authenticated/realtime-provider";
 
 /**
  * Naive authentication check, the tRPC errorLink will redirect
@@ -22,5 +23,9 @@ export default function AuthenticatedLayout() {
     return <Redirect href="/(non-authenticated)/signin" />;
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <RealtimeProvider token={token}>
+      <Stack screenOptions={{ headerShown: false }} />
+    </RealtimeProvider>
+  );
 }

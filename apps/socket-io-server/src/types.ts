@@ -5,7 +5,8 @@ export interface ServerToClientEvents {
 }
 
 export interface ClientToServerEvents {
-  hello: () => void;
+  hello: (w: string) => void;
+  emergency: (s: string) => void;
 }
 
 export interface InterServerEvents {
