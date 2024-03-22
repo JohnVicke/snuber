@@ -1,4 +1,5 @@
 import type { EmergencyRequest } from "@snuber/schemas";
+import { TRPCError } from "@trpc/server";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 import { AuthHarness } from "~/pkg/test-util/harness";
@@ -27,5 +28,16 @@ describe("emergencyRouter", () => {
       accuracy: null,
       createdAt: date.getTime(),
     } satisfies EmergencyRequest);
+  });
+  test("sending out a request with one already active returns 409", async () => {
+    const { caller } = new AuthHarness().create();
+    await caller.emergency.send({
+      latitude: 0,
+      longitude: 0,
+    });
+
+    await expect(() =>
+      caller.emergency.send({ latitude: 0, longitude: 0 }),
+    ).rejects.toThrowError(new TRPCError({ code: "CONFLICT" }));
   });
 });

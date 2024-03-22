@@ -1,7 +1,7 @@
 import { createServer } from "http";
+import type Redis from "ioredis";
 import type { Socket } from "socket.io";
 import { createAdapter } from "@socket.io/redis-adapter";
-import Redis from "ioredis";
 import { Server } from "socket.io";
 
 import type {
@@ -11,7 +11,11 @@ import type {
   SocketData,
 } from "./types";
 
-export function createIOServer() {
+interface ServerOptions {
+  redisInstance: Redis;
+}
+
+export function createIOServer(opts: ServerOptions) {
   const httpServer = createServer();
 
   const io = new Server<
@@ -21,17 +25,13 @@ export function createIOServer() {
     SocketData
   >(httpServer, {
     cors: {
-      origin: "exp://192.168.1.89:8081",
+      origin: ["exp://192.168.1.89:8081", "http://localhost:5173"],
       allowedHeaders: ["my-custom-header"],
       credentials: true,
     },
   });
 
-  const pubClient = new Redis(process.env.REDIS_URL!);
-
-  const subClient = pubClient.duplicate();
-
-  io.adapter(createAdapter(pubClient, subClient));
+  io.adapter(createAdapter(opts.redisInstance, opts.redisInstance.duplicate()));
   return io;
 }
 

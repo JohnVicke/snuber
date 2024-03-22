@@ -1,6 +1,13 @@
-import type { z } from "zod";
 import { schema } from "@snuber/db";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
+
+export const EmergencyRequestStatus = z.enum([
+  "pending",
+  "accepted",
+  "completed",
+]);
+export type EmergencyRequestStatus = z.infer<typeof EmergencyRequestStatus>;
 
 export const EmergencyRequestInsert = createInsertSchema(
   schema.emergencyRequest,
