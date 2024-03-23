@@ -8,10 +8,16 @@ export function Signin() {
   return (
     <Screen>
       <Input placeholder="namn@example.se" />
-      <Button>Fortsätt med mejl</Button>
+      <Button>
+        <Text>Fortsätt med mejl</Text>
+      </Button>
       <Text>or</Text>
-      <Button onPress={() => signInWithGoogle()}>Logga in med Google</Button>
-      <Button>Logga in med Apple</Button>
+      <Button onPress={() => signInWithGoogle()}>
+        <Text>Logga in med Google</Text>
+      </Button>
+      <Button>
+        <Text>Logga in med Applek</Text>
+      </Button>
     </Screen>
   );
 }

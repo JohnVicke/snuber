@@ -7,10 +7,10 @@ import { useColorScheme } from "nativewind";
 import { ChevronLeft } from "~/components/icons";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
+import { useLocation } from "~/hooks/use-location";
 import { colorFromConfig } from "~/utils/from-tailwind-config";
-import { useRealtime } from "./realtime-provider/realtime-context";
-import { SnuberMapProvider } from "./snuber-map/snuber-map-context";
-import { useLocation } from "./use-location";
+import { useRealtime } from "../realtime-provider/realtime-context";
+import { SnuberMapProvider } from "./snuber-map-provider";
 
 export function Map() {
   const { socket } = useRealtime();

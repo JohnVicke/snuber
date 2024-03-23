@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { Redirect, Stack } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 
 import { useAuthToken } from "~/hooks/use-auth-token";
 import { RealtimeProvider } from "~/modules/authenticated/realtime-provider";
@@ -25,7 +25,7 @@ export default function AuthenticatedLayout() {
 
   return (
     <RealtimeProvider token={token}>
-      <Stack screenOptions={{ headerShown: false }} />
+      <Tabs screenOptions={{ headerShown: false }} />
     </RealtimeProvider>
   );
 }
